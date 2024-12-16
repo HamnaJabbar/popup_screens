@@ -1,0 +1,23 @@
+
+
+<idea-plugin>
+<id>org.intellij.sdk.popup</id>
+<name>SDK: Action Sample</name>
+<depends>com.intellij.modules.platform</depends>
+
+<description>
+Demonstrates automatically showing a popup at IDE startup.
+</description>
+
+<change-notes>
+</change-notes>
+
+<vendor email="hamnajabbar36@gmail.com">HamnaJabbar</vendor>
+    <actions>
+        <action id="com.intellij.sdk.MyPopupAction" class="com.intellij.sdk.MyPopupAction" text="Show Popup" description="Displays a popup with Next and Open File buttons">
+            <add-to-group group-id="ToolsMenu" anchor="last" />
+        </action>
+    </actions>
+
+
+</idea-plugin>
