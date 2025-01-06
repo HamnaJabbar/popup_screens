@@ -5,19 +5,18 @@ plugins {
 }
 
 group = "org.Installer"
-version = "1.0-SNAPSHOT"
+version = "1.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
 // Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2023.2.6")
-    type.set("IC") // Target IDE Platform
+    version.set("2024.1.4") // Updated to target IntelliJ IDEA 2024.1.4
+    type.set("IC") // Target IDE Platform (IntelliJ Community)
 
-    plugins.set(listOf(/* Plugin Dependencies */))
+    plugins.set(listOf(/* Add plugin dependencies here if needed */))
 }
 
 tasks {
@@ -31,8 +30,8 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("232")
-        untilBuild.set("242.*")
+        sinceBuild.set("241.0") // Supports IntelliJ IDEA 2024.1 and later
+        untilBuild.set("241.*") // Supports all minor 2024.1.x updates
     }
 
     signPlugin {
