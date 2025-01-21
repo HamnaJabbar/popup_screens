@@ -11,6 +11,10 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    implementation("org.apache.xmlgraphics:batik-all:1.16") // Add the Batik library
+}
+
 // Configure Gradle IntelliJ Plugin
 intellij {
     version.set("2024.1.4") // Updated to target IntelliJ IDEA 2024.1.4

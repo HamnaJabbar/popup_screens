@@ -18,16 +18,17 @@ public class CheckBoxPanel {
         JPanel footerPanel = new JPanel(new BorderLayout());
 
         JCheckBox dontShowAgainCheckbox = new JCheckBox("Don't show again");
+        dontShowAgainCheckbox.setForeground(Color.WHITE);
         dontShowAgainCheckbox.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         footerPanel.add(dontShowAgainCheckbox, BorderLayout.WEST);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-        // Add "Skip" button
+
         JButton skipButton = new JButton("Skip");
         skipButton.addActionListener(e -> {
             if (dialog != null) {
-                dialog.dispose(); // Close the current popup
+                dialog.dispose();
             }
         });
         buttonPanel.add(skipButton);
@@ -44,7 +45,7 @@ public class CheckBoxPanel {
             buttonPanel.add(previousButton);
         }
 
-        // Add "Next" button
+
         JButton nextButton = new JButton("Next");
         nextButton.addActionListener(e -> {
             if (onNextCallback != null) {

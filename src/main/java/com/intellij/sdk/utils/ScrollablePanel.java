@@ -10,22 +10,24 @@ public class ScrollablePanel {
     private final String descriptionText;
     private final String imagePath1;
     private final String imagePath2;
+    private final String imagePath3;
 
-    public ScrollablePanel(String stepLabel, String titleText, String descriptionText, String imagePath1, String imagePath2) {
+    public ScrollablePanel(String stepLabel, String titleText, String descriptionText, String imagePath1, String imagePath2 , String imagePath3) {
         this.stepLabel = stepLabel;
         this.titleText = titleText;
         this.descriptionText = descriptionText;
         this.imagePath1 = imagePath1;
         this.imagePath2 = imagePath2 != null && !imagePath2.isEmpty() ? imagePath2 : null; // Set imagePath2 to null if not passed
+        this.imagePath3 = imagePath3 != null && !imagePath3.isEmpty() ? imagePath3 : null;
     }
 
 
     public JScrollPane createScrollableContentPanel() {
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20));
 
-        // Add title and description
+
         JLabel stepLabelComponent = new JLabel("<html>" + stepLabel + "</html>");
         stepLabelComponent.setFont(new Font("Arial", Font.BOLD, 16));
         stepLabelComponent.setForeground(Color.WHITE);
@@ -65,6 +67,17 @@ public class ScrollablePanel {
 
             contentPanel.add(Box.createVerticalStrut(5));
             contentPanel.add(secondImageLabel);
+            contentPanel.add(Box.createVerticalStrut(5));
+        }
+
+        if (imagePath3 != null) {
+            ImageIcon originalIcon3 = new ImageIcon(getClass().getResource(imagePath3));
+            Image scaledImage3 = originalIcon3.getImage().getScaledInstance(550, 300, Image.SCALE_SMOOTH);
+            JLabel thirdImageLabel = new JLabel(new ImageIcon(scaledImage3));
+            thirdImageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            contentPanel.add(Box.createVerticalStrut(5));
+            contentPanel.add(thirdImageLabel);
             contentPanel.add(Box.createVerticalStrut(5));
         }
 
