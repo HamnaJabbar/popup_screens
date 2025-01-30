@@ -8,7 +8,6 @@ import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import org.jetbrains.annotations.NotNull;
 import com.intellij.sdk.Services.SequentialPopUps;
-import com.intellij.openapi.startup.StartupActivity;
 import org.jetbrains.annotations.Nullable;
 
 public class Main implements ProjectActivity {

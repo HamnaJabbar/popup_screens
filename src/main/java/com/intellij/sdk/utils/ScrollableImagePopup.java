@@ -4,62 +4,68 @@ import com.intellij.openapi.ui.DialogWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-
 import javax.swing.*;
 import java.awt.*;
 
-import static com.intellij.ide.TipsOfTheDayUsagesCollector.SkipReason.dialog;
-
 public class ScrollableImagePopup extends DialogWrapper {
 
-    private CheckBoxPanel checkBoxPanel;
     private HeaderPanel headerPanel;
     private ScrollablePanel scrollablePanel;
+    private CheckBoxPanel checkBoxPanel;
 
-    public ScrollableImagePopup(String title,  HeaderPanel headerPanel, ScrollablePanel scrollablePanel,CheckBoxPanel checkBoxPanel) {
+    public ScrollableImagePopup(String title, HeaderPanel headerPanel, ScrollablePanel scrollablePanel, CheckBoxPanel checkBoxPanel) {
         super(true);
-        this.checkBoxPanel = checkBoxPanel;
         this.headerPanel = headerPanel;
         this.scrollablePanel = scrollablePanel;
+        this.checkBoxPanel = checkBoxPanel;
         init();
         setTitle(title);
     }
-
 
     @Override
     public @Nullable JComponent createCenterPanel() {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setPreferredSize(new Dimension(600, 400));
 
+        // Add header panel
         if (headerPanel != null) {
-//            mainPanel.add(headerPanel.createStaticHeaderPanel(Color.GREEN), BorderLayout.NORTH);
-             mainPanel.add(headerPanel.createStaticHeaderPanel(), BorderLayout.NORTH);
-        } else {
-            System.err.println("HeaderPanel is null");
+            mainPanel.add(headerPanel.createStaticHeaderPanel(), BorderLayout.NORTH);
         }
+
+        // Add scrollable panel
         if (scrollablePanel != null) {
             JScrollPane scrollPane = scrollablePanel.createScrollableContentPanel();
             mainPanel.add(scrollPane, BorderLayout.CENTER);
-        } else {
-            System.err.println("ScrollablePanel is null");
         }
 
+        // Add checkboxes/buttons
         if (checkBoxPanel != null) {
-            JDialog dialog = getPeer().getWindow() instanceof JDialog ? (JDialog) getPeer().getWindow() : null;
-            mainPanel.add(checkBoxPanel.createSouthPanel(dialog), BorderLayout.SOUTH);
-        } else {
-            System.err.println("CheckBoxPanel is null");
+            // Pass 'this.getWindow()' to createSouthPanel() for a Window type
+            mainPanel.add(checkBoxPanel.createSouthPanel(this.getWindow()), BorderLayout.SOUTH);
         }
-
 
         return mainPanel;
     }
 
-
     @Override
     protected Action @NotNull [] createActions() {
-
-        return new Action[]{};
+        return new Action[0]; // Remove default buttons
     }
 
+    public void updateContent(HeaderPanel newHeaderPanel, ScrollablePanel newScrollablePanel, CheckBoxPanel newCheckBoxPanel) {
+        this.headerPanel = newHeaderPanel;
+        this.scrollablePanel = newScrollablePanel;
+        this.checkBoxPanel = newCheckBoxPanel;
+
+        // Recreate the popup content
+        JComponent updatedContent = createCenterPanel();
+        if (updatedContent != null) {
+            getContentPane().removeAll();
+            getContentPane().add(updatedContent, BorderLayout.CENTER);
+        }
+
+        // Refresh the popup
+        pack();
+        repaint();
+    }
 }

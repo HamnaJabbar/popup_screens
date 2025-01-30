@@ -2,65 +2,78 @@ package com.intellij.sdk.utils;
 
 import javax.swing.*;
 import java.awt.*;
-
 public class CheckBoxPanel {
 
     private final Runnable onNextCallback;
     private final Runnable onPreviousCallback;
+    private final boolean hideSkipAndCheckbox;
+    private final boolean isFinishButton;
 
-    // Constructor for popups
     public CheckBoxPanel(Runnable onNextCallback, Runnable onPreviousCallback) {
-        this.onNextCallback = onNextCallback;
-        this.onPreviousCallback = onPreviousCallback;
+        this(onNextCallback, onPreviousCallback, false, false);
     }
 
-    protected JComponent createSouthPanel(JDialog dialog) {
+    public CheckBoxPanel(Runnable onNextCallback, Runnable onPreviousCallback, boolean hideSkipAndCheckbox, boolean isFinishButton) {
+        this.onNextCallback = onNextCallback;
+        this.onPreviousCallback = onPreviousCallback;
+        this.hideSkipAndCheckbox = hideSkipAndCheckbox;
+        this.isFinishButton = isFinishButton; // Initialize flag
+    }
+
+    protected JComponent createSouthPanel(Window window) {
         JPanel footerPanel = new JPanel(new BorderLayout());
 
-        JCheckBox dontShowAgainCheckbox = new JCheckBox("Don't show again");
-        dontShowAgainCheckbox.setForeground(Color.WHITE);
-        dontShowAgainCheckbox.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
-        footerPanel.add(dontShowAgainCheckbox, BorderLayout.WEST);
+
+        if (!hideSkipAndCheckbox) {
+            JCheckBox dontShowAgainCheckbox = new JCheckBox("Don't show again");
+            dontShowAgainCheckbox.setForeground(Color.WHITE);
+            dontShowAgainCheckbox.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+            footerPanel.add(dontShowAgainCheckbox, BorderLayout.WEST);
+        }
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-
-        JButton skipButton = new JButton("Skip");
-        skipButton.addActionListener(e -> {
-            if (dialog != null) {
-                dialog.dispose();
-            }
-        });
-        buttonPanel.add(skipButton);
+        // Only add the Skip button if it's not hidden
+        if (!hideSkipAndCheckbox) {
+            JButton skipButton = new JButton("Skip");
+            skipButton.addActionListener(e -> {
+                if (window != null) {
+                    window.dispose();
+                }
+            });
+            buttonPanel.add(skipButton);
+        }
 
         // Add "Previous" button if callback is provided
         if (onPreviousCallback != null) {
             JButton previousButton = new JButton("Previous");
             previousButton.addActionListener(e -> {
                 onPreviousCallback.run();
-                if (dialog != null) {
-                    dialog.dispose();
-                }
+
             });
             buttonPanel.add(previousButton);
         }
 
-
-        JButton nextButton = new JButton("Next");
-        nextButton.addActionListener(e -> {
+        // Add "Next" or "Finish" button
+        JButton actionButton = new JButton(isFinishButton ? "Finish" : "Next");
+        actionButton.addActionListener(e -> {
             if (onNextCallback != null) {
-                onNextCallback.run();
+                onNextCallback.run(); // Trigger next step
             }
-            if (dialog != null) {
-                dialog.dispose();
+            // Only close the window once the next step is complete
+            if (window != null) {
+                // Remove this window dispose line for delayed closing
+                // window.dispose();
             }
         });
-        buttonPanel.add(nextButton);
+        buttonPanel.add(actionButton);
 
         footerPanel.add(buttonPanel, BorderLayout.EAST);
 
-        if (dialog != null) {
-            dialog.getRootPane().setDefaultButton(nextButton);
+        // Cast the window to JDialog to access getRootPane
+        if (window instanceof JDialog) {
+            JDialog dialog = (JDialog) window;
+            dialog.getRootPane().setDefaultButton(actionButton);
         }
 
         return footerPanel;
