@@ -1,13 +1,10 @@
 
-
 package com.intellij.sdk.Services;
 
 import com.intellij.sdk.utils.CheckBoxPanel;
 import com.intellij.sdk.utils.HeaderPanel;
 import com.intellij.sdk.utils.ScrollableImagePopup;
 import com.intellij.sdk.utils.ScrollablePanel;
-import java.awt.Desktop;
-import java.net.URI;
 
 public class SequentialPopUps {
 
@@ -27,7 +24,7 @@ public class SequentialPopUps {
                 "To define locators, add them to the <i>locators_datasheet</i> located at <b>\\src\\main\\resources\\locatorsData</b>.<br>" +
                         "You can write locators in the relevant locators_datasheet file, i.e. CSV or Excel or JSON.<br>" +
                         "Please visit <a href='https://vstellar.io/documentations/how-to-create-locators' target='_blank'>https://vstellar.io/documentations/how-to-create-locators</a> for more details.",
-                "/assets/dum.png",
+                "/assets/check.png",
                 "/assets/IMG1S1.png",
                 this::showSecondStep
         );
@@ -117,11 +114,5 @@ public class SequentialPopUps {
         }
     }
 
-    private void openLinkInBrowser(String url) {
-        try {
-            Desktop.getDesktop().browse(new URI(url));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }

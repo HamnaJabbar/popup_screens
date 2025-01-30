@@ -27,18 +27,15 @@ public class ScrollableImagePopup extends DialogWrapper {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setPreferredSize(new Dimension(600, 400));
 
-        // Add header panel
         if (headerPanel != null) {
             mainPanel.add(headerPanel.createStaticHeaderPanel(), BorderLayout.NORTH);
         }
 
-        // Add scrollable panel
         if (scrollablePanel != null) {
             JScrollPane scrollPane = scrollablePanel.createScrollableContentPanel();
             mainPanel.add(scrollPane, BorderLayout.CENTER);
         }
 
-        // Add checkboxes/buttons
         if (checkBoxPanel != null) {
             // Pass 'this.getWindow()' to createSouthPanel() for a Window type
             mainPanel.add(checkBoxPanel.createSouthPanel(this.getWindow()), BorderLayout.SOUTH);
@@ -49,7 +46,7 @@ public class ScrollableImagePopup extends DialogWrapper {
 
     @Override
     protected Action @NotNull [] createActions() {
-        return new Action[0]; // Remove default buttons
+        return new Action[0];
     }
 
     public void updateContent(HeaderPanel newHeaderPanel, ScrollablePanel newScrollablePanel, CheckBoxPanel newCheckBoxPanel) {

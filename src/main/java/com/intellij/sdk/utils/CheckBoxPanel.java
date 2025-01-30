@@ -17,7 +17,7 @@ public class CheckBoxPanel {
         this.onNextCallback = onNextCallback;
         this.onPreviousCallback = onPreviousCallback;
         this.hideSkipAndCheckbox = hideSkipAndCheckbox;
-        this.isFinishButton = isFinishButton; // Initialize flag
+        this.isFinishButton = isFinishButton;
     }
 
     protected JComponent createSouthPanel(Window window) {
@@ -58,13 +58,9 @@ public class CheckBoxPanel {
         JButton actionButton = new JButton(isFinishButton ? "Finish" : "Next");
         actionButton.addActionListener(e -> {
             if (onNextCallback != null) {
-                onNextCallback.run(); // Trigger next step
+                onNextCallback.run();
             }
-            // Only close the window once the next step is complete
-            if (window != null) {
-                // Remove this window dispose line for delayed closing
-                // window.dispose();
-            }
+
         });
         buttonPanel.add(actionButton);
 
