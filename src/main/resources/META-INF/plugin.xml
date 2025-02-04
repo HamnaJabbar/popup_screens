@@ -1,10 +1,39 @@
+<!--<idea-plugin>-->
+<!--    <id>org.sdk.popup</id>-->
+<!--    <name>SDK: Action Sample</name>-->
+<!--    <version>1.0.0</version>-->
+<!--    <depends>com.intellij.modules.platform</depends>-->
+
+<!--    <idea-version since-build="241" until-build="241.*"/>-->
+
+<!--    <description>-->
+<!--        Demonstrates automatically showing a popup at IDE startup.-->
+<!--    </description>-->
+
+<!--    <change-notes>-->
+<!--        Initial stable version release.-->
+<!--    </change-notes>-->
+
+<!--    <vendor email="hamnajabbar36@gmail.com">Hamna Jabbar</vendor>-->
+
+<!--    <extensions defaultExtensionNs="com.intellij">-->
+<!--        <postStartupActivity implementation="com.intellij.sdk.Main"/>-->
+<!--    </extensions>-->
+
+<!--</idea-plugin>-->
+
+
+
 <idea-plugin>
     <id>org.sdk.popup</id>
     <name>SDK: Action Sample</name>
     <version>1.0.0</version>
+
+    <!-- ONLY use standard dependencies -->
     <depends>com.intellij.modules.platform</depends>
 
-    <idea-version since-build="241" until-build="241.*"/>
+    <!-- Align versions with build.gradle.kts -->
+    <idea-version since-build="241.0" until-build="241.*"/>
 
     <description>
         Demonstrates automatically showing a popup at IDE startup.
@@ -19,5 +48,4 @@
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="com.intellij.sdk.Main"/>
     </extensions>
-
 </idea-plugin>

@@ -1,22 +1,36 @@
 
+
 package com.intellij.sdk.Services;
 
 import com.intellij.sdk.utils.CheckBoxPanel;
 import com.intellij.sdk.utils.HeaderPanel;
+import com.intellij.sdk.utils.PersistentSettings;
 import com.intellij.sdk.utils.ScrollableImagePopup;
 import com.intellij.sdk.utils.ScrollablePanel;
+import javax.swing.*;
+import java.awt.*;
 
 public class SequentialPopUps {
-
     private ScrollableImagePopup popup;
     private HeaderPanel headerPanel;
     private Runnable currentStep;
 
     public void showPopups() {
+        if (!PersistentSettings.getInstance().shouldShowPopups()) {
+            return;
+        }
+
         headerPanel = new HeaderPanel();
         showFirstStep();
+
+        if (popup == null) {
+            popup = new ScrollableImagePopup(" ", headerPanel, null, null);
+        }
+        popup.show();
     }
 
+
+    // Rest of your existing methods unchanged
     private void showFirstStep() {
         currentStep = null;
         updatePopupContent(
@@ -24,15 +38,10 @@ public class SequentialPopUps {
                 "To define locators, add them to the <i>locators_datasheet</i> located at <b>\\src\\main\\resources\\locatorsData</b>.<br>" +
                         "You can write locators in the relevant locators_datasheet file, i.e. CSV or Excel or JSON.<br>" +
                         "Please visit <a href='https://vstellar.io/documentations/how-to-create-locators' target='_blank'>https://vstellar.io/documentations/how-to-create-locators</a> for more details.",
-                "/assets/check.png",
+                "/assets/1.png",
                 "/assets/IMG1S1.png",
                 this::showSecondStep
         );
-
-        if (popup == null) {
-            popup = new ScrollableImagePopup(" ", headerPanel, null, null);
-        }
-        popup.show();
     }
 
     private void showSecondStep() {
@@ -114,5 +123,7 @@ public class SequentialPopUps {
         }
     }
 
-
+    public static void resetPreferences() {
+        PersistentSettings.getInstance().setShowPopups(true);
+    }
 }
